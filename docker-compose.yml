@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: local
+    container_name: $COMPOSE_PROJECT_NAME-laravel
+    environment: 
+      DB_DATABASE: laravel
+      DB_CONNECTION: mysql
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_USERNAME: laravel
+      DB_PASSWORD: secret
+      APP_URL: http://localhost
+      APP_DEBUG: 'true'
+      APP_ENV: local
+      APP_KEY: base64:KzQ+85TeTogRSAPAVW9SAOw3IKEhhF6MabOv1dgb/q0=
+      LOG_CHANNEL: stderr
+    depends_on: 
+      - mariadb
+    ports:
+      - '80:80'
+    volumes:
+      - ./src:/var/www/html
+
+  mariadb:
+    image: mariadb:10.6
+    container_name: $COMPOSE_PROJECT_NAME-mariadb
+    restart: always
+    environment: 
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - '3306:3306'
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+          
