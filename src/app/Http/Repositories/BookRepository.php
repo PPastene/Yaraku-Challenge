@@ -12,4 +12,13 @@ class BookRepository implements IBookRepository
     {
         return Book::all();
     }
+
+    public function addBook($data)
+    {
+        $book = new Book;
+        $book->title = $data['title'];
+        $book->author = $data['author'];
+
+        return $book->save();
+    }
 }
