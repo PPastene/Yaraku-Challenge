@@ -16,4 +16,15 @@ class BookController extends Controller
     {
         return $this->book->getBooks();
     }
+
+    public function create()
+    {
+        return view('book');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->except('_token');
+        return $this->book->addBook($request);
+    }
 }
