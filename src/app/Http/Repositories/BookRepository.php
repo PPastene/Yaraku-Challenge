@@ -28,4 +28,12 @@ class BookRepository implements IBookRepository
 
         return $book->delete();
     }
+
+    public function searchBook($data)
+    {
+        $book = Book::where('title', 'LIKE', '%'.$data->title.'%')->
+                    Where('author', 'LIKE', '%'.$data->author.'%')->get();
+
+        return $book;
+    }
 }

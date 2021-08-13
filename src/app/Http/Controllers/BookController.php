@@ -27,4 +27,9 @@ class BookController extends Controller
     {
         return $this->book->deleteBook($id);
     }
+
+    public function search(Request $request)
+    {
+        return $this->book->searchBook($request);
+    }
 }
