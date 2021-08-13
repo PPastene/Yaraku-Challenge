@@ -21,4 +21,11 @@ class BookRepository implements IBookRepository
 
         return $book->save();
     }
+
+    public function deleteBook($id)
+    {
+        $book = Book::find($id);
+
+        return $book->delete();
+    }
 }
