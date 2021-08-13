@@ -27,4 +27,9 @@ class BookController extends Controller
         $data = $request->except('_token');
         return $this->book->addBook($request);
     }
+
+    public function destroy($id)
+    {
+        return $this->book->deleteBook($id);
+    }
 }
