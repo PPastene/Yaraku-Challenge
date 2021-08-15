@@ -16,7 +16,9 @@ class HomeController extends Controller
     public function index()
     {
         $books = $this->book->getBooks();
-        return Inertia::render('Index');
+        return Inertia::render('Index', [
+            'books' => $books
+        ]);
     }
 
     public function store(Request $request)
