@@ -1,6 +1,8 @@
 <template>
     <div>
-        <p>This is a flash message</p>
+        <v-container>
+            <p>This is a flash message</p>
+        </v-container>
     </div>
 </template>
 <script>
