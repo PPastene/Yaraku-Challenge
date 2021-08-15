@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Repositories\IBookRepository;
+use App\Http\Repositories\Contracts\BookContract;
+use Inertia\Inertia;
 
-class BookController extends Controller
+class HomeController extends Controller
 {
-    public function __construct(IBookRepository $book)
+    public function __construct(BookContract $book)
     {
         $this->book = $book;
     }
 
     public function index()
     {
-        return $this->book->getBooks();
+        $books = $this->book->getBooks();
+        return Inertia::render('Index');
     }
 
     public function store(Request $request)

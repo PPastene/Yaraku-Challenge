@@ -3,10 +3,10 @@
 namespace App\Http\Repositories;
 
 use Illuminate\Http\Request;
-use App\Http\Repositories\IBookRepository;
+use App\Http\Repositories\Contracts\BookContract;
 use App\Models\Book;
 
-class BookRepository implements IBookRepository
+class BookRepository implements BookContract
 {
     public function getBooks()
     {
