@@ -1,6 +1,8 @@
 <template>
     <layout>
-        <h1>Here goes the beauty of this website</h1>
+        <v-container>
+            <h1>Here goes the beauty of this website</h1>
+        </v-container>
     </layout>
 </template>
 <script>
