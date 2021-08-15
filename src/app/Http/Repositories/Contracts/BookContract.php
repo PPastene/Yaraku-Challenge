@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Http\Repositories\Contracts;
 
-interface IBookRepository
+interface BookContract
 {
     public function getBooks();
     public function addBook($data);
