@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/books', [BookController::class, 'index']);
-Route::post('/books', [BookController::class, 'store']);
-Route::delete('/books/{id}', [BookController::class, 'destroy']);
-Route::post('/books/search', [BookController::class, 'search']);
+Route::delete('/books/{id}', [HomeController::class, 'destroy']);
+Route::post('/books/search', [HomeController::class, 'search']);

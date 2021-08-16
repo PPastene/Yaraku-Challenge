@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Repositories\Contracts\BookContract;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -23,8 +24,9 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->except('_token');
-        return $this->book->addBook($request);
+        $data = $request->except('_token', 'created_at', 'updated_at');
+        $this->book->addBook($request);
+        return Redirect::route('index');
     }
 
     public function destroy($id)
