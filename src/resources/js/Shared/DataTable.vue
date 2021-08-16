@@ -22,7 +22,7 @@
                     </template>
                     <v-card>
                         <v-card-title>
-                            <h2>Add new book</h2>
+                            <h2>{{formTitle}}</h2>
                         </v-card-title>
                         <v-card-text>
                             <v-form>
@@ -58,14 +58,23 @@
                             <v-btn
                                 color="primary"
                                 text
-                                @click="add()"
+                                @click="save()"
                             >
-                                Add Book
+                                Save
                             </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
             </v-toolbar>
+        </template>
+        <template v-slot:item.actions="{ item }">
+            <v-icon
+                small
+                class="mr-2"
+                @click="editBook(item)"
+            >
+                mdi-pencil
+            </v-icon>
         </template>
     </v-data-table>
 </template>
@@ -86,13 +95,29 @@ export default {
             headers: [
                 { text: 'Title', value: 'title' },
                 { text: 'Author', value: 'author' },
+                { text: 'Actions', value: 'actions' },
             ]
         }
     },
-    methods: {
-        add()
+    computed:{
+        formTitle()
         {
-            this.$inertia.post('/book', this.book, {
+            return this.book.id === null ? 'Add New Book' : 'Edit Book'
+        }
+    },
+    methods: {
+        editBook(item)
+        {
+            this.book = {
+                id: item.id,
+                title: item.title,
+                author: item.author
+            }
+            this.dialog = true
+        },
+        save()
+        {
+            var config = {
                 onBefore: () => {
                     this.overlay = true
                 },
@@ -103,7 +128,9 @@ export default {
                 onFinish: () => {
                     this.reset();
                 },
-            })
+            }
+
+            this.book.id ? this.$inertia.put('/book', this.book, config) : this.$inertia.post('/book', this.book, config)
         },
         reset()
         {

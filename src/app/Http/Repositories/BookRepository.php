@@ -22,6 +22,15 @@ class BookRepository implements BookContract
         return $book->save();
     }
 
+    public function editBook($data)
+    {
+        $book = Book::where('id', $data['id'])->first();
+        $book->title = $data['title'];
+        $book->author = $data['author'];
+
+        return $book->save();
+    }
+
     public function deleteBook($id)
     {
         $book = Book::find($id);
