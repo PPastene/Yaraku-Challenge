@@ -20,7 +20,7 @@ export default {
         Dialog
     },
     props: {
-        books: Object
+        books: Array
     },
     data() {
         return {
