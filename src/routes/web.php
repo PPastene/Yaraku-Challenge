@@ -14,4 +14,8 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::prefix('book')->group(function () {
+    Route::post('/', [HomeController::class, 'store'])->name('book.post');
+});
