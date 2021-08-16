@@ -29,6 +29,13 @@ class HomeController extends Controller
         return Redirect::route('index');
     }
 
+    public function update(Request $request)
+    {
+        $data = $request->except('_token');
+        $this->book->editBook($data);
+        return Redirect::route('index');
+    }
+
     public function destroy($id)
     {
         return $this->book->deleteBook($id);
