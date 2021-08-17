@@ -67,7 +67,7 @@
                 </v-dialog>
                 <v-dialog v-model="dialogDelete.state" max-width="500px" @keydown.esc="reset()" @click:outside="reset()">
                     <v-card>
-                        <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+                        <v-card-title class="text-h5">Are you sure you want to delete this book?</v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="dialogDelete.state = false; reset()">Cancel</v-btn>
