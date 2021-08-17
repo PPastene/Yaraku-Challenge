@@ -19,4 +19,5 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::prefix('book')->group(function () {
     Route::post('/', [HomeController::class, 'store'])->name('book.post');
     Route::put('/', [HomeController::class, 'update'])->name('book.edit');
+    Route::delete('/{id}', [HomeController::class, 'destroy'])->name('book.delete');
 });
