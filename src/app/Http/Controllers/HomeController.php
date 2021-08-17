@@ -38,7 +38,8 @@ class HomeController extends Controller
 
     public function destroy($id)
     {
-        return $this->book->deleteBook($id);
+        $this->book->deleteBook($id);
+        return Redirect::route('index');
     }
 
     public function search(Request $request)

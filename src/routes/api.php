@@ -19,5 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::delete('/books/{id}', [HomeController::class, 'destroy']);
 Route::post('/books/search', [HomeController::class, 'search']);
