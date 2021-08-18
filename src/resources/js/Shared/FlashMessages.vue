@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-container>
+        <b-container>
             <p>This is a flash message</p>
-        </v-container>
+        </b-container>
     </div>
 </template>
 <script>
