@@ -1,9 +1,13 @@
 import Vue from 'vue'
-import vuetify from './vuetify'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 
-Vue.config.productionTip = false
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 InertiaProgress.init()
 
@@ -11,7 +15,6 @@ createInertiaApp({
   resolve: name => require(`./Pages/${name}.vue`),
   setup({ el, app, props }) {
     new Vue({
-        vuetify,
       render: h => h(app, props),
     }).$mount(el)
   },
