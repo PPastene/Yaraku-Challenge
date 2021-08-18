@@ -22,7 +22,8 @@
         "@inertiajs/inertia": "^0.9.2",
         "@inertiajs/inertia-vue": "^0.6.2",
         "@inertiajs/progress": "^0.2.4",
-        "vue": "^2.6.11",
-        "vuetify": "^2.5.8"
+        "bootstrap": "^5.1.0",
+        "bootstrap-vue": "^2.21.2",
+        "vue": "^2.6.14"
     }
 }
