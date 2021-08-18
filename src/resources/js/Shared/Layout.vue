@@ -1,8 +1,8 @@
 <template>
-    <v-app>
+    <div>
         <flash-messages />
         <slot/>
-    </v-app>
+    </div>
 </template>
 <script>
 import FlashMessages from '@/Shared/FlashMessages'
