@@ -51,4 +51,13 @@ class HomeController extends Controller
             "excel" => "download/$excel"
         ]);
     }
+
+    public function export(Request $request)
+    {
+        $excel = BooksExport::export($request);
+
+        return redirect()->route("index")->with("success", [
+            "excel" => "download/$excel"
+        ]);
+    }
 }
