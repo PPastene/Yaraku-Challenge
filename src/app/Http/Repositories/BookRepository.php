@@ -8,9 +8,12 @@ use App\Models\Book;
 
 class BookRepository implements BookContract
 {
-    public function getBooks()
+    public function getBooks($data)
     {
-        return Book::all();
+        return Book::where('title', 'LIKE', '%'.$data->title.'%')
+                    ->where('author', 'LIKE', '%'.$data->author.'%')
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
     }
 
     public function addBook($data)
@@ -36,13 +39,5 @@ class BookRepository implements BookContract
         $book = Book::find($id);
 
         return $book->delete();
-    }
-
-    public function searchBook($data)
-    {
-        $book = Book::where('title', 'LIKE', '%'.$data->title.'%')->
-                    Where('author', 'LIKE', '%'.$data->author.'%')->get();
-
-        return $book;
     }
 }
