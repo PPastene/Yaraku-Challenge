@@ -7,10 +7,18 @@ ARG LARAVEL_PATH
 COPY src $LARAVEL_PATH
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
+    build-essential \
     git \
+    libpng-dev \
+    libxml2-dev \
     libzip-dev \
     mariadb-client \
-    && docker-php-ext-install \
+    unzip \
+    zip
+
+RUN docker-php-ext-install \
+        gd \
+        opcache \
         pdo_mysql \
         zip
 

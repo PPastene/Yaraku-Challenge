@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Repositories\Contracts\BookContract;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Exports\BooksExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -45,5 +47,14 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         return $this->book->searchBook($request);
+    }
+
+    public function export(Request $request)
+    {
+        $excel = BooksExport::export($request);
+
+        return redirect()->route("index")->with("success", [
+            "excel" => "download/$excel"
+        ]);
     }
 }
