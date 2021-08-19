@@ -16,11 +16,10 @@ class HomeController extends Controller
         $this->book = $book;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $books = $this->book->getBooks();
         return Inertia::render('Index', [
-            'books' => $books
+            'books' => $this->book->getBooks($request)
         ]);
     }
 
@@ -42,11 +41,6 @@ class HomeController extends Controller
     {
         $this->book->deleteBook($id);
         return Redirect::route('index');
-    }
-
-    public function search(Request $request)
-    {
-        return $this->book->searchBook($request);
     }
 
     public function export(Request $request)
