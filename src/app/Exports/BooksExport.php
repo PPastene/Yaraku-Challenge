@@ -2,72 +2,111 @@
 
 namespace App\Exports;
 
-use App\Models\Book;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Sabre\Xml\Service;
 
-class BooksExport implements FromCollection
+class BooksExport implements FromCollection, WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-
     use Exportable;
 
-    protected $params;
-
-    public function __construct($params)
+    public function __construct($type, $items)
     {
-        $this->params = $params;
+        $this->type = $type;
+        $this->items = $items;
     }
 
     public function collection()
     {
-        return Book::all();
+        return $this->items;
     }
 
-    public function query()
+    public static function exportCSV($type, $collection)
     {
+        $now = time();
+        $file = $type.'-'.$now.'.csv';
 
+        Excel::store(new BooksExport($type, $collection), $file, "public");
+
+        return $file;
     }
 
-    public static function export($params)
+    public static function exportXML($type, $collection)
     {
-        if($params->input('data') && $params->input('format'))
+        // https://www.guru99.com/php-and-xml.html#8
+        $now = time();
+        $file = $type.'-'.$now.'.xml';
+
+        $dom = new \DOMDocument("1.0");
+        $dom->encoding = 'utf-8';
+		$dom->xmlVersion = '1.0';
+		$dom->formatOutput = true;
+
+		$root = $dom->createElement('Books');
+
+        if($type == 'books')
         {
-            $now = time();
-            $file = $params->input('data').'-'.$now.'.'.$params->input('format');
-            $books;
-
-            switch ( $params->input('data') )
+            foreach($collection as $item)
             {
-                case "books":
-                    $books = Book::get("title");
-                    break;
-
-                case "authors":
-                    $books = Book::get("author");
-                    break;
-
-                case "books-authors":
-                    $books = Book::get(["title", "author"]);
-                    break;
+                $book_node = $dom->createElement('book');
+                $book_title = $dom->createElement('title', $item['title']);
+                $book_node->appendChild($book_title);
+                $root->appendChild($book_node);
             }
+        }
 
-            switch ( $params->input('format') )
+        if($type == 'authors')
+        {
+            foreach($collection as $item)
             {
-                case 'csv':
-                    Excel::store(new BooksExport($params), $file, "public");
-                    break;
-
-                case 'xml':
-                    Excel::store(new BooksExport($params), $file, "public");
-                    break;
+                $book_node = $dom->createElement('book');
+                $book_author = $dom->createElement('author', $item['author']);
+                $book_node->appendChild($book_author);
+                $root->appendChild($book_node);
             }
+        }
 
-            return $file;
+        if($type == 'books-authors')
+        {
+            foreach($collection as $item)
+            {
+                $book_node = $dom->createElement('book');
+                $book_title = $dom->createElement('title', $item['title']);
+                $book_author = $dom->createElement('author', $item['author']);
+                $book_node->appendChild($book_title);
+                $root->appendChild($book_node);
+                $book_node->appendChild($book_author);
+                $root->appendChild($book_node);
+            }
+        }
+		$dom->appendChild($root);
+
+        $dom->formatOutput = true;
+        $archivo = $dom->saveXML();
+        Storage::disk('local')->put('public/'.$file, $archivo);
+
+        return $file;
+
+    }
+
+    public function headings(): array
+    {
+        if($this->type == 'books')
+        {
+            return ['Title',];
+        }
+
+        if($this->type == 'authors')
+        {
+            return ['Author',];
+        }
+
+        if($this->type == 'books-authors')
+        {
+            return ['Title','Author',];
         }
     }
 }
