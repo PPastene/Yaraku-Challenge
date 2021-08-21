@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Http\Repositories\Contracts\BookContract;
+use App\Http\Repositories\Contracts\ExportContract;
 use App\Http\Repositories\BookRepository;
+use App\Http\Repositories\ExportRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(BookContract::class, BookRepository::class);
+        $this->app->bind(ExportContract::class, ExportRepository::class);
     }
 
     /**
