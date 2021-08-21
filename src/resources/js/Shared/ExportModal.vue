@@ -4,8 +4,8 @@
             <b-form-group label="Select the data to export" v-slot="{ ariaDescribedby }">
                 <b-form-radio-group
                     id="radio-group-1"
-                    v-model="selected.data"
-                    :options="options.data"
+                    v-model="selected.type"
+                    :options="options.type"
                     :aria-describedby="ariaDescribedby"
                     name="radio-data"
                 ></b-form-radio-group>
@@ -19,11 +19,10 @@
                     name="radio-formats"
                 ></b-form-radio-group>
             </b-form-group>
-            {{selected}}
         </b-form>
         <template #modal-footer>
             <b-button variant="danger" @click="closeModal">Cancel</b-button>
-            <b-button variant="success" @click="submit">Export</b-button>
+            <b-button variant="success" v-bind:href="'/book/export/'+selected.type+'/'+selected.format">Export</b-button>
         </template>
     </b-modal>
 </template>
@@ -32,11 +31,11 @@ export default {
     data(){
         return {
             selected: {
-                data: null,
+                type: null,
                 format: null
             },
             options: {
-                data: [
+                type: [
                     { text: 'Books only', value: 'books' },
                     { text: 'Authors only', value: 'authors' },
                     { text: 'Books and Authors', value: 'books-authors' },
@@ -59,22 +58,12 @@ export default {
         },
         submit()
         {
-            this.$inertia.get('/book/export', this.selected, {
-                onBefore: () => {
 
-                },
-                onSuccess: () => {
-                    this.closeModal()
-                },
-                onFinish: () => {
-                    this.reset();
-                },
-            })
         },
         reset()
         {
             this.selected = {
-                data: null,
+                type: null,
                 format: null
             }
         }
