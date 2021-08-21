@@ -45,12 +45,27 @@ class HomeController extends Controller
         return Redirect::route('index');
     }
 
-    public function export(Request $request)
+    public function download($file)
     {
-        $excel = BooksExport::export($request);
+        if (!$file) {
+            return redirect()->route("index");
+        }
 
-        return redirect()->route("index")->with("success", [
-            "excel" => "download/$excel"
+        $path = storage_path("app/public/$file");
+
+        if (!file_exists($path)) {
+            return redirect()->route("index");
+        }
+
+        return response()->download($path, $file, [
+            "Content-Type" => "application/vnd.ms-excel",
+            'Content-Disposition' => 'inline; filename="' . $file . '"'
         ]);
+    }
+
+    public function export(Request $request, $type, $format)
+    {
+        $file = $this->export->export($type, $format);
+        return $this->download($file);
     }
 }
