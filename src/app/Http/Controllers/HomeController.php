@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Repositories\Contracts\BookContract;
+use App\Http\Repositories\Contracts\ExportContract;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Exports\BooksExport;
@@ -11,9 +12,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
-    public function __construct(BookContract $book)
+    public function __construct(BookContract $book, ExportContract $export)
     {
         $this->book = $book;
+        $this->export = $export;
     }
 
     public function index(Request $request)
