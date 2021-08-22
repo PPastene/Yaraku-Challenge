@@ -70,7 +70,7 @@ class HomeController extends Controller
         $file = $this->export->export($type, $format);
 
         return redirect()->route('index')->with('success', [
-            'export' => "download/$file"
+            'export' => "book/download/$file"
         ]);
     }
 }
