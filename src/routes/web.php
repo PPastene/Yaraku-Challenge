@@ -21,4 +21,5 @@ Route::prefix('book')->group(function () {
     Route::put('/', [HomeController::class, 'update'])->name('book.edit');
     Route::delete('/{id}', [HomeController::class, 'destroy'])->name('book.delete');
     Route::get('/export/{type}/{format}', [HomeController::class, 'export'])->name('book.export');
+    Route::get('/download/{file}', [HomeController::class, "download"])->name("book.download");
 });
