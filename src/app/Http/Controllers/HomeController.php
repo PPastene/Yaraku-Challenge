@@ -29,20 +29,23 @@ class HomeController extends Controller
     {
         $data = $request->except('_token', 'created_at', 'updated_at');
         $this->book->addBook($request);
-        return Redirect::route('index');
+
+        return redirect()->route('index')->with('success', 'Book Created');
     }
 
     public function update(Request $request)
     {
         $data = $request->except('_token');
         $this->book->editBook($data);
-        return Redirect::route('index');
+
+        return redirect()->route('index')->with('success', 'Book Edited');
     }
 
     public function destroy($id)
     {
         $this->book->deleteBook($id);
-        return Redirect::route('index');
+
+        return redirect()->route('index')->with('success', 'Book Deleted');
     }
 
     public function download($file)
@@ -58,7 +61,6 @@ class HomeController extends Controller
         }
 
         return response()->download($path, $file, [
-            "Content-Type" => "application/vnd.ms-excel",
             'Content-Disposition' => 'inline; filename="' . $file . '"'
         ]);
     }
@@ -66,6 +68,9 @@ class HomeController extends Controller
     public function export(Request $request, $type, $format)
     {
         $file = $this->export->export($type, $format);
-        return $this->download($file);
+
+        return redirect()->route('index')->with('success', [
+            'export' => "download/$file"
+        ]);
     }
 }
