@@ -1,6 +1,14 @@
 <template>
     <div>
-        <b-table striped hover :items="items" :fields="fields">
+        <b-table
+            id="books-table"
+            :items="items"
+            :fields="fields"
+            :current-page="pagination.currentPage"
+            :per-page="pagination.perPage"
+            striped
+            hover
+        >
             <template #cell(actions)="row">
                 <b-button variant="secondary" squared @click="showEditModal(row.item)">
                     <b-icon icon="pencil"></b-icon>
@@ -10,6 +18,12 @@
                 </b-button>
             </template>
         </b-table>
+        <b-pagination
+            v-model="pagination.currentPage"
+            :total-rows="rows"
+            :per-page="pagination.perPage"
+            aria-controls="books-table"
+        ></b-pagination>
         <add-edit-modal ref="editModalComponent"></add-edit-modal>
         <delete-modal ref="deleteModalComponent"></delete-modal>
     </div>
@@ -31,7 +45,17 @@ export default {
                 {key: 'title', label: 'Title'},
                 {key: 'author', label: 'Author'},
                 {key: 'actions', label: 'Actions'},
-            ]
+            ],
+            pagination: {
+                currentPage: 1,
+                perPage: 10,
+            }
+        }
+    },
+    computed: {
+        rows()
+        {
+            return this.items.length
         }
     },
     methods:{
