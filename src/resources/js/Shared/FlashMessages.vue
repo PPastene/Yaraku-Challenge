@@ -1,12 +1,55 @@
 <template>
-    <div>
-        <b-container>
-            <p>This is a flash message</p>
-        </b-container>
-    </div>
+    <b-container>
+        <b-alert
+            v-if="$page.props.flash.success && show"
+            class="position-fixed fixed-top m-0 rounded-0"
+            style="z-index: 2000;"
+            variant="success"
+            show
+            dismissible
+            @dismissed="show = false"
+        >
+            {{ $page.props.flash.success }}
+        </b-alert>
+        <b-alert
+            v-if="$page.props.flash.error"
+            class="position-fixed fixed-top m-0 rounded-0"
+            style="z-index: 2000;"
+            variant="danger"
+            show
+            dismissible
+            @dismissed="show = false"
+        >
+            {{ $page.props.flash.error }}
+        </b-alert>
+        <b-alert
+            v-if="$page.props.flash.success.export"
+            class="position-fixed fixed-top m-0 rounded-0"
+            style="z-index: 2000;"
+            variant="success"
+            show
+            dismissible
+            @dismissed="show = false"
+        >
+            You can download the file <a :href="$page.props.flash.success.export">here</a>
+        </b-alert>
+    </b-container>
 </template>
 <script>
 export default {
-
+    data() {
+        return {
+            show: true,
+        }
+    },
+    watch:
+    {
+        '$page.props.flash': {
+            handler() {
+                this.show = true
+                },
+            deep: true,
+        },
+    }
 }
 </script>
