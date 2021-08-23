@@ -36,7 +36,7 @@ class HomeController extends Controller
     public function update(Request $request)
     {
         $data = $request->except('_token');
-        $this->book->editBook($data);
+        $this->book->editBook($request);
 
         return redirect()->route('index')->with('success', 'Book Edited');
     }
