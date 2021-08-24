@@ -22,7 +22,7 @@
         </b-form>
         <template #modal-footer>
             <b-button variant="danger" @click="closeModal">Cancel</b-button>
-            <b-button variant="success" v-bind:href="'/book/export/'+selected.type+'/'+selected.format">Export</b-button>
+            <b-button variant="success" @click="submit">Export</b-button>
         </template>
     </b-modal>
 </template>
@@ -58,7 +58,17 @@ export default {
         },
         submit()
         {
+            this.$inertia.get(`/book/export/${this.selected.type}/${this.selected.format}`, {
+                onBefore: () => {
 
+                },
+                onSuccess: () => {
+                    this.closeModal()
+                },
+                onFinish: () => {
+                    this.reset();
+                },
+            })
         },
         reset()
         {
