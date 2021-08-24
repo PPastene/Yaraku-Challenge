@@ -23,7 +23,7 @@
             {{ $page.props.flash.error }}
         </b-alert>
         <b-alert
-            v-if="$page.props.flash.success.export"
+            v-if="$page.props.flash.success"
             class="position-fixed fixed-top m-0 rounded-0"
             style="z-index: 2000;"
             variant="success"
