@@ -4,6 +4,7 @@
             id="books-table"
             :items="items"
             :fields="fields"
+            :primary-key="items.id"
             :current-page="pagination.currentPage"
             :per-page="pagination.perPage"
             striped
