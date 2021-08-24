@@ -7,6 +7,7 @@
             :primary-key="items.id"
             :current-page="pagination.currentPage"
             :per-page="pagination.perPage"
+            :sort-desc.sync="sorting.sortDesc"
             striped
             hover
         >
@@ -43,10 +44,13 @@ export default {
     data(){
         return {
             fields: [
-                {key: 'title', label: 'Title'},
-                {key: 'author', label: 'Author'},
-                {key: 'actions', label: 'Actions'},
+                {key: 'title', label: 'Title', sortable: true},
+                {key: 'author', label: 'Author', sortable: true},
+                {key: 'actions', label: 'Actions', sortable: false},
             ],
+            sorting : {
+                sortDesc: false,
+            },
             pagination: {
                 currentPage: 1,
                 perPage: 10,
