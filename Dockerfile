@@ -34,6 +34,8 @@ RUN a2enmod rewrite
 # Composer
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
+RUN chown -R www-data $LARAVEL_PATH/storage
+
 WORKDIR $LARAVEL_PATH
 
 EXPOSE 80
