@@ -48,6 +48,13 @@ services:
     working_dir: /var/www/html
     entrypoint: ['npm']
 
+  admin:
+    image: adminer
+    restart: always
+    container_name: adminer
+    ports:
+      - "8080:8080"
+
 volumes:
   data_volume:
     name: ${VOLUME_NAME}
