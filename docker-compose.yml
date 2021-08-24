@@ -40,6 +40,14 @@ services:
     volumes:
       - data_volume:/var/lib/mysql
 
+  npm:
+    image: node:14
+    container_name: npm
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    entrypoint: ['npm']
+
 volumes:
   data_volume:
     name: ${VOLUME_NAME}
