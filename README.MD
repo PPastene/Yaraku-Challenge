@@ -50,5 +50,5 @@ Note: If you have NodeJS installed locally you can skip using the container and 
 ## How to test the application
 The project provides some tests to check the if the routes are providing the required data and doing the required actions.
 
-- If you installed the application into your local setup, just simply open a terminal and run `php artisan test`. The recommendation is to create another database for testing and not compromise the data already saved in development.
+- If you installed the application into your local setup, in your .env change the `APP_ENV` variable to `testing`, then open a terminal and run `php artisan test`. The recommendation is to create another database for testing and not compromise the data already saved in development.
 - As well for the development, this project  provides a testing .env file. To run the testing environment run `docker-compose --env-file test/.docker.test.env up -d` and follow the same instructions, once the website is running execute `docker exec -it Yaraku_Challenge-laravel-testing bash` and run `php artisan test` for testing. Don't forget to run  `docker-compose --env-file test/.docker.test.env down -v` to stop the containers.
