@@ -54,9 +54,6 @@ export default {
             modal: false
         }
     },
-    created(){
-        console.log('Modal created!')
-    },
     computed: {
         formTitle(){
             return this.book.id === null ? 'Add New Book' : 'Edit Book'
