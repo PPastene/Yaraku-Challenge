@@ -12,6 +12,7 @@ You need the following installed
 - MySQL / MariaDB (although PostgreSQL could work too)
 - Composer 2
 - NodeJS v14
+
 Note: In Windows you can use XAMP or it's equivalent in other O.S.
 
 This repository provides a Dockerfile, a docker-compose.yml and a dev .env file to run a development enviroment for the project. For that you will need
