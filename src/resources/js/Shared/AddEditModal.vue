@@ -35,7 +35,7 @@
                     <b-button variant="danger" @click="closeModal">
                         Cancel
                     </b-button>
-                    <b-button variant="success" :disabled="spinner" @click="handleSubmit(submit)">
+                    <b-button variant="success" @click="handleSubmit(submit)">
                         Save
                     </b-button>
                 </b-form>
