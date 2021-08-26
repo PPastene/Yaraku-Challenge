@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Exports\BooksExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 
 class HomeController extends Controller
 {
@@ -25,17 +27,21 @@ class HomeController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
         $data = $request->except('_token', 'created_at', 'updated_at');
+
+        $validated = $request->validated();
         $this->book->addBook($request);
 
         return redirect()->route('index')->with('success', 'Book Created');
     }
 
-    public function update(Request $request)
+    public function update(UpdateBookRequest $request)
     {
         $data = $request->except('_token');
+
+        $validated = $request->validated();
         $this->book->editBook($request);
 
         return redirect()->route('index')->with('success', 'Book Edited');
