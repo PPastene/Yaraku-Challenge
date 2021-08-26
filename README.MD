@@ -3,6 +3,7 @@ The following  is an assignment fora job applicaion in Yaraku. This project is a
 - Laravel 8
 - InertiaJS 0.9.2
 - VueJS 2
+- Vee-Validate 3 (for validation inputs)
 - Bootstrap-Vue 2
 
 ## How to run in local
