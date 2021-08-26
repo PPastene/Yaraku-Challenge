@@ -12,7 +12,7 @@
             {{ $page.props.flash.success }}
         </b-alert>
         <b-alert
-            v-if="$page.props.flash.error && show"
+            v-if="($page.props.flash.error || Object.keys($page.props.errors).length > 0) && show"
             class="position-fixed fixed-top m-0 rounded-0"
             style="z-index: 2000;"
             variant="danger"
@@ -20,7 +20,8 @@
             dismissible
             @dismissed="show = false"
         >
-            {{ $page.props.flash.error }}
+            <span v-if="$page.props.flash.error">{{ $page.props.flash.error }}</span>
+            <span v-else>There's an error during your request</span>
         </b-alert>
         <b-alert
             v-if="$page.props.flash.success && show && ($page.props.flash.success.export)"
