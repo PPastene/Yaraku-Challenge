@@ -1,48 +1,55 @@
 <template>
     <div>
-        <b-modal ref="add-edit-modal" :title='formTitle' @hidden="reset" @close="reset">
-            <b-form @submit="submit">
-                <b-form-group
-                    id="input-group-1"
-                    label="Title:"
-                    label-for="input-1"
-                >
-                    <b-form-input
-                        id="input-1"
-                        v-model="book.title"
-                        type="text"
-                        placeholder="Enter book title"
-                        required
-                    ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                    id="input-group-2"
-                    label="Author:"
-                    label-for="input-2"
-                >
-                    <b-form-input
-                        id="input-2"
-                        v-model="book.author"
-                        type="text"
-                        placeholder="Enter book author"
-                        required
-                    ></b-form-input>
-                </b-form-group>
-            </b-form>
-            <template #modal-footer>
-                <b-button variant="danger" @click="closeModal">
-                    Cancel
-                </b-button>
-                <b-button variant="success" @click="submit">
-                    Save
-                </b-button>
-            </template>
+        <b-modal ref="add-edit-modal" :title='formTitle' @hidden="reset" hide-footer>
+            <ValidationObserver v-slot="{ handleSubmit }">
+                <b-form ref="add-edit-form" @submit.prevent="handleSubmit(submit)">
+                    <ValidationProvider rules="required" name="Title" v-slot="{ errors }">
+                        <b-form-group
+                            id="title-input-group"
+                            label="Title:"
+                            label-for="title-input">
+                            <b-form-input
+                                id="title-input"
+                                v-model="book.title"
+                                type="text"
+                                placeholder="Enter book title">
+                            </b-form-input>
+                            <span>{{ errors[0] }}</span>
+                        </b-form-group>
+                    </ValidationProvider>
+
+                    <ValidationProvider rules="required" name="Author" v-slot="{ errors }">
+                        <b-form-group
+                            id="author-input-group"
+                            label="Author:"
+                            label-for="author-input">
+                            <b-form-input
+                                id="author-input"
+                                v-model="book.author"
+                                type="text"
+                                placeholder="Enter book author">
+                            </b-form-input>
+                            <span>{{ errors[0] }}</span>
+                        </b-form-group>
+                    </ValidationProvider>
+                    <b-button variant="danger" @click="closeModal">
+                        Cancel
+                    </b-button>
+                    <b-button variant="success" :disabled="spinner" @click="handleSubmit(submit)">
+                        Save
+                    </b-button>
+                </b-form>
+            </ValidationObserver>
         </b-modal>
     </div>
 </template>
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
 export default {
-
+    components: {
+        ValidationObserver,
+        ValidationProvider
+    },
     data(){
         return {
             book:{
@@ -50,7 +57,7 @@ export default {
                 title: null,
                 author: null,
             },
-            overlay: false,
+            spinner: false,
             modal: false
         }
     },
@@ -75,14 +82,19 @@ export default {
         {
             this.$refs['add-edit-modal'].hide()
         },
+        handleOk(bvModalEvt) {
+            bvModalEvt.preventDefault()
+            this.submit()
+        },
         submit()
         {
             var config = {
                 onBefore: () => {
-
+                    this.spinner = true
                 },
                 onSuccess: () => {
                     this.closeModal()
+                    this.spinner = false
                 },
                 onFinish: () => {
                     this.reset();
