@@ -40,7 +40,7 @@ This repository provides a Dockerfile, a docker-compose.yml and a dev .env file 
 ### Run the project with Docker
 1. Clone this repository with `git clone https://github.com/PPastene/Yaraku-Challenge`
 2. Run `docker-compose --env-file dev/.docker.dev.env up -d` and wait until completition (Note: Make sure there's not other containers or services that are using the 80 and 3306 ports. If so, you can change the ports in the .env files and the docker-compose file before executing the up command)
-3. Run `docker exec -it Yaraku_Challenge-laravel-local bash` to enter the container
+3. Run `docker exec -it Yaraku-laravel-local bash` to enter the container
 4. Inside the container, run `composer install` to install the PHP packages
 5. Inside the container, run `php artisan migrate`. If returns a successful message then the connection with the database has been successful. If returns an error please check if the database container has been started up (check with `docker ps`)
 6. Exit the container with `exit`, then run `docker-compose run --rm npm i` to install the NodeJs packages
@@ -53,4 +53,4 @@ Note: If you have NodeJS installed locally you can skip using the container and 
 The project provides some tests to check the if the routes are providing the required data and doing the required actions.
 
 - If you installed the application into your local setup, in your .env change the `APP_ENV` variable to `testing`, then open a terminal and run `php artisan test`. The recommendation is to create another database for testing and not compromise the data already saved in development.
-- As well for the development, this project  provides a testing .env file. To run the testing environment run `docker-compose --env-file test/.docker.test.env up -d` and follow the same instructions, once the website is running execute `docker exec -it Yaraku_Challenge-laravel-testing bash` and run `php artisan test` for testing. Don't forget to run  `docker-compose --env-file test/.docker.test.env down -v` to stop the containers.
+- As well for the development, this project  provides a testing .env file. To run the testing environment run `docker-compose --env-file test/.docker.test.env up -d` and follow the same instructions, once the website is running execute `docker exec -it Yaraku-laravel-testing bash` and run `php artisan test` for testing. Don't forget to run  `docker-compose --env-file test/.docker.test.env down -v` to stop the containers.
