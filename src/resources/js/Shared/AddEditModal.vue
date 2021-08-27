@@ -116,6 +116,7 @@ export default {
                 title: null,
                 author: null,
             }
+            this.spinner = false
         }
     }
 }

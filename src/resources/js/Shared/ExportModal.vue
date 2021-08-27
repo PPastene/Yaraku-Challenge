@@ -91,6 +91,7 @@ export default {
                 type: null,
                 format: null
             }
+            this.spinner = false
         }
     }
 }
