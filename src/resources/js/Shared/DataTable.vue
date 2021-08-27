@@ -10,6 +10,7 @@
             :sort-desc.sync="sorting.sortDesc"
             striped
             hover
+            show-empty
         >
             <template #cell(actions)="row">
                 <b-button variant="secondary" squared @click="showEditModal(row.item)">
