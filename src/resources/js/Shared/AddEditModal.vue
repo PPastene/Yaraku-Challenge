@@ -35,7 +35,7 @@
                     <b-button variant="danger" @click="closeModal">
                         Cancel
                     </b-button>
-                    <b-button variant="success" @click="handleSubmit(submit)">
+                    <b-button variant="success" type="submit">
                         Save
                     </b-button>
                 </b-form>
@@ -52,11 +52,11 @@ export default {
     },
     data(){
         return {
-            book:{
+            book: this.$inertia.form({
                 id: null,
                 title: null,
                 author: null,
-            },
+            }),
             spinner: false,
             modal: false
         }
@@ -93,11 +93,13 @@ export default {
                     this.spinner = true
                 },
                 onSuccess: () => {
-                    this.closeModal()
                     this.spinner = false
                 },
+                onError: () => {
+                    this.closeModal()
+                },
                 onFinish: () => {
-                    this.reset();
+                    this.closeModal()
                 },
             }
             this.book.id ? this.$inertia.put('/book', this.book, config) : this.$inertia.post('/book', this.book, config)

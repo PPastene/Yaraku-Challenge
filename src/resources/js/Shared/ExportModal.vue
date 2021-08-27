@@ -1,35 +1,27 @@
 <template>
     <b-modal ref="export-modal" title="Export Data" @hidden="reset" @close="reset" hide-footer>
-        <ValidationObserver v-slot="{ handleSubmit }">
-            <b-form @submit.prevent="handleSubmit(submit)">
-                <ValidationProvider  rules="required|oneOf:books,authors,books-authors" name="Data" v-slot="{ errors }">
-                    <b-form-group label="Select the data to export" v-slot="{ ariaDescribedby }">
-                        <b-form-radio-group
-                            id="type-radio-group"
-                            v-model="selected.type"
-                            :options="options.type"
-                            :aria-describedby="ariaDescribedby"
-                            name="radio-type"
-                        ></b-form-radio-group>
-                        <span>{{ errors[0] }}</span>
-                    </b-form-group>
-                </ValidationProvider>
-                <ValidationProvider rules="required|oneOf:csv,xml" name="Format" v-slot="{ errors }">
-                    <b-form-group label="Select the file format" v-slot="{ ariaDescribedby }">
-                        <b-form-radio-group
-                            id="format-radio-group"
-                            v-model="selected.format"
-                            :options="options.formats"
-                            :aria-describedby="ariaDescribedby"
-                            name="radio-format"
-                        ></b-form-radio-group>
-                        <span>{{ errors[0] }}</span>
-                    </b-form-group>
-                </ValidationProvider>
-                <b-button variant="danger" @click="closeModal">Cancel</b-button>
-                <b-button variant="success" type="submit">Export</b-button>
-            </b-form>
-            </ValidationObserver>
+        <b-form @submit.prevent="submit">
+                <b-form-group label="Select the data to export" v-slot="{ ariaDescribedby }">
+                    <b-form-radio-group
+                        id="type-radio-group"
+                        v-model="selected.type"
+                        :options="options.type"
+                        :aria-describedby="ariaDescribedby"
+                        name="radio-type"
+                    ></b-form-radio-group>
+                </b-form-group>
+                <b-form-group label="Select the file format" v-slot="{ ariaDescribedby }">
+                    <b-form-radio-group
+                        id="format-radio-group"
+                        v-model="selected.format"
+                        :options="options.formats"
+                        :aria-describedby="ariaDescribedby"
+                        name="radio-format"
+                    ></b-form-radio-group>
+                </b-form-group>
+            <b-button variant="danger" @click="closeModal">Cancel</b-button>
+            <b-button variant="success" type="submit">Export</b-button>
+        </b-form>
     </b-modal>
 </template>
 <script>
