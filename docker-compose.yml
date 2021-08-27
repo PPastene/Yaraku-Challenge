@@ -9,6 +9,7 @@ services:
       target: base
     container_name: Yaraku-laravel-${APP_ENV}
     environment: 
+      APP_NAME: ${APP_NAME}
       DB_DATABASE: ${DB_DATABASE}
       DB_CONNECTION: ${DB_CONNECTION}
       DB_HOST: ${DB_HOST}
