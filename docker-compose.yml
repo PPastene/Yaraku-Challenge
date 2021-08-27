@@ -6,7 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${APP_NAME}-laravel-${APP_ENV}
+      target: base
+    container_name: Yaraku-laravel-${APP_ENV}
     environment: 
       DB_DATABASE: ${DB_DATABASE}
       DB_CONNECTION: ${DB_CONNECTION}
@@ -28,7 +29,7 @@ services:
 
   mariadb:
     image: mariadb:10.6
-    container_name: ${APP_NAME}-mariadb-${APP_ENV}
+    container_name: Yaraku-mariadb-${APP_ENV}
     restart: always
     environment: 
       MYSQL_USER: ${DB_USERNAME}
