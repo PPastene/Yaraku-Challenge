@@ -55,6 +55,7 @@ export default {
         reset()
         {
             this.book.id = null
+            this.spinner = false
         }
     }
 }
