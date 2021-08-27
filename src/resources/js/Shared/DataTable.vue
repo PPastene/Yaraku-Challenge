@@ -11,6 +11,7 @@
             striped
             hover
             show-empty
+            responsive
         >
             <template #cell(actions)="row">
                 <b-button variant="secondary" squared @click="showEditModal(row.item)">
