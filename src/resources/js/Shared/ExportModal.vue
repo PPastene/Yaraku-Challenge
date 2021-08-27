@@ -20,7 +20,13 @@
                     ></b-form-radio-group>
                 </b-form-group>
             <b-button variant="danger" @click="closeModal">Cancel</b-button>
-            <b-button variant="success" type="submit">Export</b-button>
+            <b-button variant="success" type="submit">
+                <div v-if="spinner">
+                    <b-spinner v-if="spinner" small type="grow"></b-spinner>
+                    Exporting...
+                </div>
+                <span v-else>Export</span>
+            </b-button>
         </b-form>
     </b-modal>
 </template>
@@ -33,10 +39,10 @@ export default {
     },
     data(){
         return {
-            selected: {
+            selected: this.$inertia.form({
                 type: null,
                 format: null
-            },
+            }),
             options: {
                 type: [
                     { text: 'Books only', value: 'books' },
@@ -47,7 +53,8 @@ export default {
                     { text: 'CSV', value: 'csv' },
                     { text: 'XML', value: 'xml' },
                 ]
-            }
+            },
+            spinner: false,
         }
     },
     methods: {
@@ -61,15 +68,20 @@ export default {
         },
         submit()
         {
+            this.spinner = true
             this.$inertia.get(`/book/export/${this.selected.type}/${this.selected.format}`, {
                 onBefore: () => {
-
+                    this.spinner = true
                 },
                 onSuccess: () => {
+                    this.spinner = false
+                },
+                onError: () => {
+                    this.spinner = false
                     this.closeModal()
                 },
                 onFinish: () => {
-                    this.reset();
+                    this.closeModal()
                 },
             })
         },
