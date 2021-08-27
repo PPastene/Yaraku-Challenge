@@ -10,12 +10,14 @@
             :sort-desc.sync="sorting.sortDesc"
             striped
             hover
+            show-empty
+            responsive
         >
             <template #cell(actions)="row">
-                <b-button variant="secondary" squared @click="showEditModal(row.item)">
+                <b-button variant="secondary" squared size="sm" @click="showEditModal(row.item)">
                     <b-icon icon="pencil"></b-icon>
                 </b-button>
-                <b-button variant="danger" squared @click="showDeleteModal(row.item.id)">
+                <b-button variant="danger" squared size="sm" @click="showDeleteModal(row.item.id)">
                     <b-icon icon="trash"></b-icon>
                 </b-button>
             </template>

@@ -36,7 +36,11 @@
                         Cancel
                     </b-button>
                     <b-button variant="success" type="submit">
-                        Save
+                        <div v-if="spinner">
+                            <b-spinner v-if="spinner" small type="grow"></b-spinner>
+                            Saving...
+                        </div>
+                        <span v-else>Save</span>
                     </b-button>
                 </b-form>
             </ValidationObserver>
@@ -96,6 +100,7 @@ export default {
                     this.spinner = false
                 },
                 onError: () => {
+                    this.spinner = false
                     this.closeModal()
                 },
                 onFinish: () => {

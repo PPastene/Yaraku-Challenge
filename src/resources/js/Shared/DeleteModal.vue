@@ -6,7 +6,11 @@
                 Cancel
             </b-button>
             <b-button variant="danger" @click="submit">
-                OK
+                <div v-if="spinner">
+                    <b-spinner v-if="spinner" small type="grow"></b-spinner>
+                    Deleting...
+                </div>
+                <span v-else>Delete</span>
             </b-button>
         </template>
     </b-modal>
@@ -15,7 +19,8 @@
 export default {
     data(){
         return {
-            book: {id: null}
+            book: {id: null},
+            spinner: false
         }
     },
     methods:{
@@ -30,15 +35,20 @@ export default {
         },
         submit()
         {
+            this.spinner = true
             this.$inertia.delete('/book/'+ this.book.id, {
                 onBefore: () => {
-
+                    this.spinner = true
                 },
                 onSuccess: () => {
+                    this.spinner = false
+                },
+                onError: () => {
+                    this.spinner = false
                     this.closeModal()
                 },
                 onFinish: () => {
-                    this.reset();
+                    this.closeModal();
                 },
             })
         },
