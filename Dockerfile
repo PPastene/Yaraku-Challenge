@@ -1,6 +1,6 @@
 ARG LARAVEL_PATH=/var/www/html
 
-FROM php:8-apache AS local
+FROM php:8-apache AS base
 
 # Update and install dependences
 ARG LARAVEL_PATH
@@ -8,6 +8,7 @@ COPY src $LARAVEL_PATH
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
     git \
     libpng-dev \
     libxml2-dev \
@@ -39,3 +40,12 @@ RUN chown -R www-data $LARAVEL_PATH/storage
 WORKDIR $LARAVEL_PATH
 
 EXPOSE 80
+
+FROM base AS production
+
+# Install NodeJS LTS
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+
+COPY ./entrypoint.sh /tmp    
+ENTRYPOINT ["/tmp/entrypoint.sh"]
